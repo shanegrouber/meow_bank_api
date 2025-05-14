@@ -1,0 +1,13 @@
+[project]
+name = "meow-assessment"
+version = "0.1.0"
+description = "Bank API"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "black>=25.1.0",
+    "fastapi>=0.115.12",
+    "isort>=6.0.1",
+    "ruff>=0.11.9",
+    "sqlalchemy>=2.0.41",
+]
