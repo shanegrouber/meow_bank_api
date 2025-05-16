@@ -22,13 +22,13 @@ class TransferService:
     def create_transfer(self, transfer_data: TransferCreate) -> TransferResponse:
         """Create a new transfer between accounts."""
         try:
-            with self.db.begin():
-                if transfer_data.from_account_id == transfer_data.to_account_id:
-                    raise ValidationError("Cannot transfer to the same account")
-
+            with self.db.begin_nested():
                 source_account = self.db.get(Account, transfer_data.from_account_id)
                 if not source_account:
                     raise ResourceNotFoundError("Sender account not found")
+
+                if transfer_data.from_account_id == transfer_data.to_account_id:
+                    raise ValidationError("Cannot transfer to the same account")
 
                 dest_account = self.db.get(Account, transfer_data.to_account_id)
                 if not dest_account:
@@ -72,7 +72,7 @@ class TransferService:
             log.error(
                 "Failed to create transfer",
                 extra={
-                    "error": str(format_exc(e)),
+                    "error": str(format_exc()),
                     "from_account_id": transfer_data.from_account_id,
                     "to_account_id": transfer_data.to_account_id,
                     "amount": transfer_data.amount,
@@ -113,7 +113,7 @@ class TransferService:
             log.error(
                 "Failed to create system transfer",
                 extra={
-                    "error": str(format_exc(e)),
+                    "error": str(format_exc()),
                     "to_account_id": to_account_id,
                     "amount": amount,
                 },

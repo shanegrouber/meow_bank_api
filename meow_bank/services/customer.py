@@ -34,7 +34,7 @@ class CustomerService:
             log.error(
                 "Failed to create customer",
                 extra={
-                    "error": str(format_exc(e)),
+                    "error": str(format_exc()),
                     "customer_data": customer_data.model_dump(),
                 },
             )

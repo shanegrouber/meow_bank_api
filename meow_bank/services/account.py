@@ -56,7 +56,7 @@ class AccountService:
             log.error(
                 "Failed to create account",
                 extra={
-                    "error": str(format_exc(e)),
+                    "error": str(format_exc()),
                     "account_data": account_data.model_dump(),
                 },
             )

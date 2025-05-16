@@ -90,8 +90,18 @@ The API will be available at:
 
 - Local development: `http://localhost:8000`
 
-### API Documentation
+## API Documentation
 
 - Swagger UI: `http://localhost:8000/docs`
 - ReDoc: `http://localhost:8000/redoc`
 - OpenAPI spec: `http://localhost:8000/openapi.json`
+
+## Testing
+
+The project uses pytest for testing.
+
+To run all tests:
+
+```bash
+pytest
+```
