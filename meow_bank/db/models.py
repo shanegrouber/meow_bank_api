@@ -38,12 +38,15 @@ class Account(Base):
         back_populates="to_account",
     )
 
+    def __repr__(self):
+        return f"<Account(id={self.id}, customer_id={self.customer_id})>"
+
 
 class Transfer(Base):
     __tablename__ = "transfers"
 
     id = Column(String, primary_key=True, index=True, default=lambda: str(uuid.uuid4()))
-    from_account_id = Column(String, ForeignKey("accounts.id"), nullable=False)
+    from_account_id = Column(String, ForeignKey("accounts.id"), nullable=True)
     to_account_id = Column(String, ForeignKey("accounts.id"), nullable=False)
     amount = Column(Float, nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
@@ -59,13 +62,10 @@ class Transfer(Base):
         back_populates="received_transfers",
     )
 
-
-class BalanceCache(Base):
-    __tablename__ = "balance_cache"
-
-    id = Column(String, primary_key=True, index=True, default=lambda: str(uuid.uuid4()))
-    account_id = Column(String, ForeignKey("accounts.id"), nullable=False, unique=True)
-    balance = Column(Float, nullable=False)
-    updated_at = Column(DateTime(timezone=True), server_default=func.now())
-
-    account = relationship("Account")
+    def __repr__(self):
+        return (
+            f"<Transfer(id={self.id}, "
+            f"from_account_id={self.from_account_id}, "
+            f"to_account_id={self.to_account_id}, "
+            f"amount={self.amount})>"
+        )

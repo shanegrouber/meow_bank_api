@@ -49,7 +49,6 @@ Key configuration options:
 
 - `ENVIRONMENT`: Set to "development" or "production" (defaults to "development")
 - `DATABASE_URL`: Database connection string (defaults to SQLite)
-- `LOG_LEVEL`: Logging level (automatically set based on environment)
 
 Example `.env` file:
 
@@ -66,49 +65,33 @@ After installation, set up pre-commit hooks to automatically format and lint you
 pre-commit install
 ```
 
-Now, every time you make a commit, the following checks will run automatically:
-
-- Code formatting with Black
-- Import sorting with isort
-- Linting with Ruff
-
 ## Database Setup
 
-The project uses SQLite as the database. To initialize the database and create all necessary tables:
-
-```bash
-python -m meow_bank.db.init_db
-```
-
-This will create the following tables:
+The project uses SQLite as the database.
+Starting the server will initialise and create the following tables:
 
 - `customers` - Stores customer information
 - `accounts` - Stores bank account information
 - `transfers` - Records money transfers between accounts
-- `balance_cache` - Caches account balances for quick lookups
 
 ## Logging
-
-The application uses Loguru for logging with the following features:
-
-- Console output with colored formatting for better readability
-- JSON-formatted logs stored in the `logs` directory
-- Daily log rotation with 30-day retention
-- Log compression to save disk space
-- Environment-based logging levels:
-  - Development: Shows DEBUG and above in console
-  - Production: Shows INFO and above in console
-  - All environments: DEBUG and above are always logged to file
 
 Log files are stored in the `logs` directory with the format `meow_bank_YYYYMMDD.log`.
 
 ## Running the Application
 
-To start the FastAPI application:
+Start the FastAPI development server:
 
 ```bash
-uvicorn meow_bank.main:app --reload
+uvicorn meow_bank.main:app --reload --port 8000
 ```
 
-The API will be available at `http://localhost:8000`.
-Swagger API Documentation: `http://localhost:8000/docs`
+The API will be available at:
+
+- Local development: `http://localhost:8000`
+
+### API Documentation
+
+- Swagger UI: `http://localhost:8000/docs`
+- ReDoc: `http://localhost:8000/redoc`
+- OpenAPI spec: `http://localhost:8000/openapi.json`

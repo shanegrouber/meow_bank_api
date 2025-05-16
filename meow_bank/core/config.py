@@ -2,14 +2,11 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    # Base settings
     ENVIRONMENT: str = "development"
 
-    # API settings
     API_HOST: str = "0.0.0.0"
     API_PORT: int = 8000
 
-    # Database settings
     DATABASE_URL: str = "sqlite:///./meow_bank.db"
 
     model_config = SettingsConfigDict(
