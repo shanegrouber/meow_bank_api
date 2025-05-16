@@ -6,7 +6,7 @@ from meow_bank.db.models import Customer
 def test_create_customer(test_client):
     customer_data = {"name": "Test Customer"}
 
-    response = test_client.post("/customers/", json=customer_data)
+    response = test_client.post("/api/customers/", json=customer_data)
 
     assert response.status_code == status.HTTP_201_CREATED
     data = response.json()
@@ -18,7 +18,7 @@ def test_create_customer(test_client):
 def test_create_customer_invalid_name(test_client):
     customer_data = {"name": ""}  # Empty name should fail
 
-    response = test_client.post("/customers/", json=customer_data)
+    response = test_client.post("/api/customers/", json=customer_data)
 
     assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
@@ -28,7 +28,7 @@ def test_get_customer(test_client, db_session):
     db_session.add(customer)
     db_session.commit()
 
-    response = test_client.get(f"/customers/{customer.id}")
+    response = test_client.get(f"/api/customers/{customer.id}")
 
     assert response.status_code == status.HTTP_200_OK
     data = response.json()
@@ -38,7 +38,7 @@ def test_get_customer(test_client, db_session):
 
 
 def test_get_customer_not_found(test_client):
-    response = test_client.get("/customers/00000000-0000-0000-0000-000000000000")
+    response = test_client.get("/api/customers/00000000-0000-0000-0000-000000000000")
 
     assert response.status_code == status.HTTP_404_NOT_FOUND
 
@@ -48,7 +48,7 @@ def test_get_customer_with_accounts(test_client, db_session):
     db_session.add(customer)
     db_session.commit()
 
-    response = test_client.get(f"/customers/{customer.id}/accounts")
+    response = test_client.get(f"/api/customers/{customer.id}/accounts")
 
     assert response.status_code == status.HTTP_200_OK
     data = response.json()

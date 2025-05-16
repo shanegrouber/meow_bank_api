@@ -1,9 +1,10 @@
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import APIRouter, Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from meow_bank.api.routes import accounts, customers, transfers
+from meow_bank.api.security import get_api_key
 from meow_bank.db.database import init_db
 
 
@@ -29,12 +30,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(accounts.router)
-app.include_router(customers.router)
-app.include_router(transfers.router)
+router = APIRouter(dependencies=[Depends(get_api_key)], prefix="/api")
 
+router.include_router(customers.router)
+router.include_router(accounts.router)
+router.include_router(transfers.router)
 
-@app.get("/health")
-async def health_check():
-    """Health check endpoint."""
-    return {"status": "healthy"}
+app.include_router(router)

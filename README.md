@@ -96,6 +96,23 @@ The API will be available at:
 - ReDoc: `http://localhost:8000/redoc`
 - OpenAPI spec: `http://localhost:8000/openapi.json`
 
+## Authentication
+
+Include your API key in the `X-API-Key` header with every request:
+
+### Configuration
+
+The API key can be configured through:
+
+1. Environment variable: `MEOW_BANK_API_KEY`
+2. `.env` file:
+
+```env
+MEOW_BANK_API_KEY=your_api_key
+```
+
+In development, a default API key (`test_api_key`) is used if not configured.
+
 ## Testing
 
 The project uses pytest for testing.

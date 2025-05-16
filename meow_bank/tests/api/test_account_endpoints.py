@@ -10,7 +10,7 @@ def test_create_account(test_client, db_session):
 
     account_data = {"customer_id": str(customer.id), "initial_deposit": 100.0}
 
-    response = test_client.post("/accounts/", json=account_data)
+    response = test_client.post("/api/accounts/", json=account_data)
 
     assert response.status_code == status.HTTP_200_OK
     data = response.json()
@@ -26,7 +26,7 @@ def test_create_account_invalid_customer(test_client):
         "initial_deposit": 100.0,
     }
 
-    response = test_client.post("/accounts/", json=account_data)
+    response = test_client.post("/api/accounts/", json=account_data)
 
     assert response.status_code == status.HTTP_404_NOT_FOUND
 
@@ -40,7 +40,7 @@ def test_get_account(test_client, db_session):
     db_session.add(account)
     db_session.commit()
 
-    response = test_client.get(f"/accounts/{account.id}")
+    response = test_client.get(f"/api/accounts/{account.id}")
 
     assert response.status_code == status.HTTP_200_OK
     data = response.json()
@@ -50,7 +50,7 @@ def test_get_account(test_client, db_session):
 
 
 def test_get_account_not_found(test_client):
-    response = test_client.get("/accounts/00000000-0000-0000-0000-000000000000")
+    response = test_client.get("/api/accounts/00000000-0000-0000-0000-000000000000")
 
     assert response.status_code == status.HTTP_404_NOT_FOUND
 
@@ -64,7 +64,7 @@ def test_get_account_with_transfers(test_client, db_session):
     db_session.add(account)
     db_session.commit()
 
-    response = test_client.get(f"/accounts/{account.id}/transfers")
+    response = test_client.get(f"/api/accounts/{account.id}/transfers")
 
     assert response.status_code == status.HTTP_200_OK
     data = response.json()

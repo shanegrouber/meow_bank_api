@@ -3,6 +3,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+from meow_bank.core.config import settings
 from meow_bank.db.database import Base, get_db
 from meow_bank.main import app
 
@@ -42,5 +43,6 @@ def test_client(db_session):
 
     app.dependency_overrides[get_db] = override_get_db
     client = TestClient(app)
+    client.headers = {"X-API-Key": settings.MEOW_BANK_API_KEY}
     yield client
     app.dependency_overrides.clear()

@@ -9,6 +9,8 @@ class Settings(BaseSettings):
 
     DATABASE_URL: str = "sqlite:///./meow_bank.db"
 
+    MEOW_BANK_API_KEY: str = "test_api_key"
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
