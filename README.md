@@ -50,13 +50,6 @@ Key configuration options:
 - `ENVIRONMENT`: Set to "development" or "production" (defaults to "development")
 - `DATABASE_URL`: Database connection string (defaults to SQLite)
 
-Example `.env` file:
-
-```env
-ENVIRONMENT=development
-DATABASE_URL=sqlite:///./meow_bank.db
-```
-
 ## Development Setup
 
 After installation, set up pre-commit hooks to automatically format and lint your code:

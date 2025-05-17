@@ -23,7 +23,7 @@ class Account(Base):
     __tablename__ = "accounts"
 
     id = Column(String, primary_key=True, index=True, default=lambda: str(uuid.uuid4()))
-    customer_id = Column(String, ForeignKey("customers.id"), nullable=False)
+    customer_id = Column(String, ForeignKey("customers.id"), nullable=False, index=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     customer = relationship("Customer", back_populates="accounts")
@@ -46,8 +46,12 @@ class Transfer(Base):
     __tablename__ = "transfers"
 
     id = Column(String, primary_key=True, index=True, default=lambda: str(uuid.uuid4()))
-    from_account_id = Column(String, ForeignKey("accounts.id"), nullable=True)
-    to_account_id = Column(String, ForeignKey("accounts.id"), nullable=False)
+    from_account_id = Column(
+        String, ForeignKey("accounts.id"), nullable=True, index=True
+    )
+    to_account_id = Column(
+        String, ForeignKey("accounts.id"), nullable=False, index=True
+    )
     amount = Column(Float, nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
