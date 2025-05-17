@@ -33,13 +33,13 @@ This will install both production and development dependencies. The development 
 
 - black (code formatting)
 - isort (import sorting)
-- mypy (type checking)
 - pre-commit (git hooks)
 - ruff (linting)
 
 ## Configuration
 
-The application uses a central configuration system based on Pydantic settings. Configuration can be set through:
+The application uses a central configuration system based on Pydantic settings.
+Configuration can be set through:
 
 1. Environment variables
 2. `.env` file in the project root
@@ -49,6 +49,7 @@ Key configuration options:
 
 - `ENVIRONMENT`: Set to "development" or "production" (defaults to "development")
 - `DATABASE_URL`: Database connection string (defaults to SQLite)
+- `MEOW_BANK_API_KEY`: Key to be used for API calls (defaults to "test_api_key")
 
 ## Development Setup
 
@@ -92,19 +93,6 @@ The API will be available at:
 ## Authentication
 
 Include your API key in the `X-API-Key` header with every request:
-
-### Configuration
-
-The API key can be configured through:
-
-1. Environment variable: `MEOW_BANK_API_KEY`
-2. `.env` file:
-
-```env
-MEOW_BANK_API_KEY=your_api_key
-```
-
-In development, a default API key (`test_api_key`) is used if not configured.
 
 ## Testing
 
